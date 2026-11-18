@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akshat Chaudhari</title>
+  <meta name="description" content="Akshat Chaudhari — Computer Science student, developer and AI & ML enthusiast. Take the elevator through the building." />
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Elevator doors (intro + every floor change) -->
+  <div class="lift-doors closed" id="liftDoors" aria-hidden="true">
+    <div class="lift-half left"><span class="etch">A</span></div>
+    <div class="lift-half right"><span class="etch">C</span></div>
+    <div class="lift-readout"><span class="lr-arrow" id="lrArrow">▲</span><span class="lr-num" id="lrNum">G</span><span class="lr-label" id="lrLabel">Lobby</span></div>
+  </div>
+
+  <header class="topbar">
+    <a class="nameplate" href="#lobby" data-floor-link="lobby" aria-label="Back to the lobby">
+      <span class="screw"></span><span>Akshat Chaudhari</span><span class="screw"></span>
+    </a>
+    <button class="light-switch" id="themeToggle" aria-label="Light switch: toggle dark mode" aria-pressed="false">
+      <span class="plate"><span class="rocker"></span></span>
+      <span class="ls-label mono" id="lsLabel">LIGHTS</span>
+    </button>
+  </header>
+
+  <!-- Elevator control panel (navigation) -->
+  <nav class="elevator collapsed" id="elevator" aria-label="Floors">
+    <button class="el-display" id="elDisplay" aria-label="Show floor buttons" aria-expanded="false">
+      <span class="el-arrow" id="elArrow">▲</span><span class="el-num" id="elNum">G</span>
+    </button>
+    <div class="el-label mono" id="elLabel">Lobby</div>
+    <div class="el-buttons" id="elButtons"></div>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <main id="main">
+    <!-- G · LOBBY -->
+    <section class="floor lobby" id="lobby" data-floor="G" data-label="Lobby">
+      <div class="container lobby-grid">
+        <div class="letterboard-wrap">
+          <div class="letterboard" id="letterboard" role="img" aria-label="Letter board">
+            <p class="lb-line lb-small" id="lbIntro"></p>
+            <p class="lb-line lb-name" id="lbName1"></p>
+            <p class="lb-line lb-name" id="lbName2"></p>
+            <p class="lb-line lb-role" id="lbRole" aria-live="off"></p>
+            <p class="lb-line lb-tag" id="lbTag"></p>
+          </div>
+          <span class="sr-only" id="lbText"></span>
+        </div>
+        <aside class="directory" aria-label="Building directory">
+          <div class="dir-head"><span class="screw"></span><span>Building Directory</span><span class="screw"></span></div>
+          <ul id="directory"></ul>
+          <div class="dir-foot">
+            <button class="call-btn" id="callBtn" aria-label="Call the elevator to floor 1"><span>▲</span></button>
+            <span class="mono">Press to go up<br /><small>or just scroll</small></span>
+          </div>
+        </aside>
+      </div>
+      <div class="lobby-floor" aria-hidden="true"></div>
+    </section>
+
+    <!-- 1 · ABOUT -->
+    <section class="floor" id="about" data-floor="1" data-label="Reception">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="corkboard reveal" id="corkboard"></div>
+      </div>
+    </section>
+
+    <!-- 2 · EDUCATION -->
+    <section class="floor" id="education" data-floor="2" data-label="Records office">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <p class="floor-hint mono reveal">Click a badge to flip it.</p>
+        <div class="badge-rail reveal" id="badges"><div class="rail"></div></div>
+        <p class="sticky-note-inline reveal" id="eduNote"></p>
+      </div>
+    </section>
+
+    <!-- 3 · SKILLS -->
+    <section class="floor" id="skills" data-floor="3" data-label="Tool room">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <p class="floor-hint mono reveal">Pull a drawer to see what's inside.</p>
+        <div class="toolchest reveal" id="toolchest"></div>
+      </div>
+    </section>
+
+    <!-- 4 · PROJECTS -->
+    <section class="floor corridor" id="projects" data-floor="4" data-label="Lab wing">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="breaker reveal" id="breaker" role="toolbar" aria-label="Filter labs by wing">
+          <span class="breaker-title mono">Wing power</span>
+          <div class="breaker-switches" id="filters"></div>
+        </div>
+        <p class="floor-hint mono reveal">Each door has a live view of the lab through its window. Knock (click) to go in.</p>
+        <div class="doors" id="doorsGrid"></div>
+      </div>
+      <div class="baseboard" aria-hidden="true"></div>
+    </section>
+
+    <!-- 5 · INTERESTS -->
+    <section class="floor" id="interests" data-floor="5" data-label="The arcade">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <p class="floor-hint mono reveal">Shutters go up as the shops open. Click one to pull it down again.</p>
+        <div class="shops" id="shops"></div>
+      </div>
+    </section>
+
+    <!-- 6 · APPROACH -->
+    <section class="floor" id="approach" data-floor="6" data-label="Operating manual">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="plaque reveal" id="plaque"></div>
+      </div>
+    </section>
+
+    <!-- 7 · LEARNING -->
+    <section class="floor" id="learning" data-floor="7" data-label="Under construction">
+      <div class="hazard" aria-hidden="true"></div>
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="site reveal" id="site"></div>
+      </div>
+      <div class="hazard" aria-hidden="true"></div>
+    </section>
+
+    <!-- 8 · BEYOND -->
+    <section class="floor" id="beyond" data-floor="8" data-label="Community hall">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="hall reveal" id="hall"></div>
+      </div>
+    </section>
+
+    <!-- 9 · CONTACT -->
+    <section class="floor" id="contact" data-floor="9" data-label="Mailroom">
+      <div class="container">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="mailroom">
+          <div class="reveal" id="mailboxes"></div>
+          <div class="letter-zone reveal">
+            <form class="letter" id="contactForm" novalidate>
+              <div class="stamp" aria-hidden="true"><span>AC</span><small>FLOOR 9</small></div>
+              <div class="postmark" aria-hidden="true">MAILROOM<br />★ 2028 ★</div>
+              <p class="letter-to">To: <b>Akshat Chaudhari</b>, Mailroom, Floor 9</p>
+              <div class="field">
+                <label for="cf-name">From (your name)</label>
+                <input id="cf-name" name="name" type="text" autocomplete="name" required />
+                <p class="err" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="cf-email">Return address (email)</label>
+                <input id="cf-email" name="email" type="email" autocomplete="email" required />
+                <p class="err" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="cf-topic">Re:</label>
+                <select id="cf-topic" name="topic">
+                  <option>Collaborating on a project</option>
+                  <option>Hackathon team-up</option>
+                  <option>Discussing technology</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cf-msg">Message</label>
+                <textarea id="cf-msg" name="message" rows="5" required></textarea>
+                <p class="err" aria-live="polite"></p>
+              </div>
+              <button class="post-btn" type="submit">Seal &amp; post ✉</button>
+            </form>
+            <div class="mail-slot" aria-hidden="true"><span>LETTERS</span></div>
+            <p class="form-status" id="formStatus" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- R · ROOF -->
+    <section class="floor roof" id="roof" data-floor="R" data-label="Rooftop">
+      <div class="sky" aria-hidden="true"><div class="stars" id="stars"></div><div class="orb"></div></div>
+      <div class="container roof-inner">
+        <div class="floor-sign reveal" data-sign></div>
+        <div class="billboard reveal" id="billboard"></div>
+      </div>
+      <svg class="skyline" id="skyline" aria-hidden="true" preserveAspectRatio="xMidYMax slice"></svg>
+      <footer class="roof-foot">
+        <span id="footerName"></span>
+        <span class="mono">Build it · Test it · Understand it · Improve it</span>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Lab room (project detail) -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-stage">
+      <article class="modal-card" id="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-btn" data-close aria-label="Leave the lab">✕ <span>Exit</span></button>
+        <div class="modal-visual" id="modalVisual"></div>
+        <div class="clipboard">
+          <div class="clip" aria-hidden="true"></div>
+          <div class="modal-body" id="modalBody"></div>
+        </div>
+        <div class="modal-nav">
+          <button class="hall-btn" id="prevProject">← <span id="prevLabel">Room</span></button>
+          <span class="mono" id="modalCount"></span>
+          <button class="hall-btn" id="nextProject"><span id="nextLabel">Room</span> →</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="data.js"></script>
+  <script src="three-scene.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
