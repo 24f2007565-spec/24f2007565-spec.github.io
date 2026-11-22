@@ -321,8 +321,16 @@
     $("#elButtons").innerHTML = btns.join("");
   }
 
+  function rollTo(el, text, dir) {
+    if (el.textContent === text) return;
+    el.textContent = text;
+    if (reduced) return;
+    const from = dir < 0 ? -100 : 100;
+    el.animate([{ transform: `translateY(${from}%)`, opacity: 0, filter: "blur(2px)" }, { transform: "none", opacity: 1, filter: "none" }],
+      { duration: 420, easing: "cubic-bezier(.2,1.4,.4,1)" });
+  }
   function setDisplay(f, dir) {
-    $("#elNum").textContent = f.num;
+    rollTo($("#elNum"), f.num, dir || 1);
     $("#elLabel").textContent = f.title;
     if (dir) $("#elArrow").classList.toggle("down", dir < 0);
     $$(".el-btn[data-go]").forEach((b) => b.classList.toggle("lit", b.dataset.go === f.id));
@@ -347,7 +355,7 @@
     $("#lrLabel").textContent = dir > 0 ? "Going up" : "Going down";
     for (let k = 1; k <= steps; k++) {
       const f = floors[current.i + k * dir];
-      $("#lrNum").textContent = f.num;
+      rollTo($("#lrNum"), f.num, dir);
       await wait(per);
     }
     scrollToFloor(target);
@@ -358,10 +366,13 @@
     traveling = false;
   }
   function scrollToFloor(f) {
-    const html = document.documentElement;
-    html.style.scrollBehavior = "auto";
-    window.scrollTo(0, f.el.offsetTop);
-    html.style.scrollBehavior = "";
+    if (window.lenis) window.lenis.scrollTo(f.el.offsetTop, { immediate: true, force: true });
+    else {
+      const html = document.documentElement;
+      html.style.scrollBehavior = "auto";
+      window.scrollTo(0, f.el.offsetTop);
+      html.style.scrollBehavior = "";
+    }
     current = f;
     setDisplay(f);
   }
@@ -540,6 +551,7 @@
   function openModal(i, room) {
     modalOpen = true; srcRoom = room; lastFocus = document.activeElement;
     visibleScenes.forEach((s) => s.stop());
+    if (window.lenis) window.lenis.stop();
     modal.hidden = false;
     document.body.classList.add("modal-open");
     fillModal(i);
@@ -561,6 +573,7 @@
     document.body.classList.remove("modal-open");
     killScene(modalScene); modalScene = null;
     modalOpen = false;
+    if (window.lenis) window.lenis.start();
     $$(".room.opening").forEach((r) => r.classList.remove("opening")); // doors swing shut behind you
     visibleScenes.forEach((s) => s.start());
     ($(".doorway", target) || lastFocus).focus({ preventScroll: true });
