@@ -17,12 +17,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="entrance.css" />
 </head>
-<body>
+<body class="outside">
   <a class="skip" href="#main">Skip to content</a>
 
   <!-- Elevator doors (intro + every floor change) -->
-  <div class="lift-doors closed" id="liftDoors" aria-hidden="true">
+  <div class="lift-doors" id="liftDoors" aria-hidden="true">
     <div class="lift-half left"><span class="etch">A</span></div>
     <div class="lift-half right"><span class="etch">C</span></div>
     <div class="lift-readout"><span class="lr-arrow" id="lrArrow">▲</span><span class="lr-num" id="lrNum">G</span><span class="lr-label" id="lrLabel">Lobby</span></div>
@@ -50,6 +51,41 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <main id="main">
+    <!-- STREET ENTRANCE · preloader + portal into the building -->
+    <div class="entrance-wrap">
+      <section class="entrance" id="entrance" aria-label="Entrance">
+        <div class="ent-pre" data-pre>
+          <div class="ent-pre-word" aria-hidden="true">AKSHAT CHAUDHARI</div>
+          <div class="ent-pre-count mono" aria-hidden="true"><span id="entCount">00</span>%</div>
+        </div>
+        <div class="ent-media" id="entMedia">
+          <div class="ent-scene" id="entScene"><svg id="entSvg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div>
+          <div class="ent-plane ent-light" id="entLight" aria-hidden="true">
+            <span class="dl-logo">AC</span><span class="dl-est mono">EST. 2028</span>
+            <span class="dl-reader"><i></i><i></i><i></i></span>
+            <span class="dl-handle"></span>
+            <span class="dl-name" id="entDoorName"></span>
+            <span class="dl-floor mono">FLOOR G · LOBBY</span>
+          </div>
+        </div>
+        <div class="ent-copy" id="entCopy">
+          <div class="ent-col">
+            <p class="ent-badge" data-intro="badge"><i></i><span id="entBadge"></span></p>
+            <h1 class="ent-h1" id="entH1" data-intro="h1"></h1>
+          </div>
+          <div class="ent-btns" data-intro="btns">
+            <button class="ent-btn light" id="entEnter"></button>
+            <button class="ent-btn ghost" id="entLabs"></button>
+          </div>
+          <p class="ent-lead" id="entLead" data-intro="lead"></p>
+        </div>
+        <div class="ent-over" id="entOver">
+          <div class="ent-plane ent-portal" id="entPortal" aria-hidden="true"><i class="fill"></i><i class="rim"></i></div>
+          <div class="ent-fade" id="entFade"></div>
+        </div>
+      </section>
+    </div>
+
     <!-- G · LOBBY -->
     <section class="floor lobby" id="lobby" data-floor="G" data-label="Lobby">
       <div class="container lobby-grid">
@@ -236,5 +272,8 @@
   <script src="app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="motion.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="entrance.js"></script>
 </body>
 </html>

@@ -8,6 +8,15 @@ window.PORTFOLIO = {
   roles: ["Computer Science Student", "Developer", "AI & ML Enthusiast", "Systems Experimenter"],
   heroLine:
     "I don't just learn technology. I experiment with it, break things, build systems and figure out how they work.",
+  // ---- The street entrance (first screen, before the lobby) ----
+  entrance: {
+    badge: "CS & Business Systems · Data Science @ IIT Madras",
+    headline: ["Build It. Test It.", "Understand It."],
+    lead: "I don't just learn technology. I experiment with it, break things, build systems and figure out how they work.",
+    primary: "Enter the building",
+    secondary: "See the labs",
+    doorText: ["AKSHAT", "CHAUDHARI"],
+  },
   intro: [
     "I'm Akshat Chaudhari, a computer science student pursuing Computer Science & Business Systems at D.Y. Patil University and Data Science at IIT Madras.",
     "My interests lie at the intersection of software engineering, artificial intelligence, data science, backend development and experimental computing.",
