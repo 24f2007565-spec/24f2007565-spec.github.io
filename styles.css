@@ -190,9 +190,11 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Floors (sections) ---------- */
 @media (min-width: 900px) {
-  main .floor { padding-right: 120px; padding-left: 64px; }
+  /* equal gutters on both sides (shaft on the left, elevator panel on the right) so every floor is centred */
+  main .floor { padding-left: 130px; padding-right: 130px; }
+  main .floor > .hazard { margin-left: -130px; margin-right: -130px; }
   main .roof { padding-right: 0; padding-left: 0; }
-  .roof-inner { width: min(1080px, 100% - 272px); }
+  .roof-inner { width: min(1080px, 100% - 292px); }
 }
 .floor { position: relative; padding: 120px 0 110px; border-top: 10px solid var(--bg-alt); }
 .floor::before { /* ceiling lamp pool of light */
@@ -396,7 +398,7 @@ button { font: inherit; color: inherit; }
 .corridor { background: linear-gradient(180deg, transparent 0 70%, rgba(0,0,0,.04)), var(--concrete), var(--bg-alt); }
 .baseboard { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: linear-gradient(180deg, var(--wood-1), var(--wood-2)); }
 .breaker {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; padding: 14px 18px; border-radius: 10px; margin-bottom: 26px;
+  display: flex; width: fit-content; max-width: 100%; flex-wrap: wrap; align-items: center; gap: 14px 18px; padding: 14px 18px; border-radius: 10px; margin-bottom: 26px;
   background: repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px), linear-gradient(180deg, var(--steel-hi), var(--steel-lo));
   box-shadow: var(--shadow), inset 0 0 0 1px #0002;
 }
@@ -411,7 +413,7 @@ button { font: inherit; color: inherit; }
 .breaker-sw[aria-pressed="true"] .tag { background: #ffb547; }
 .breaker-sw .tag i { font-style: normal; opacity: .6; }
 
-.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; align-items: end; }
+.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 46px 44px; align-items: start; }
 .room { position: relative; display: grid; gap: 10px; outline: none; }
 .room-plate { justify-self: center; display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px; border-radius: 4px;
   font: 700 15px var(--sign); letter-spacing: .14em; background: var(--text); color: var(--bg); box-shadow: var(--shadow); }
@@ -443,7 +445,7 @@ button { font: inherit; color: inherit; }
 .door-name { margin-top: 12%; width: 100%; text-align: center; padding: 8px 6px; border-radius: 3px; background: #f4f1e8; color: #1d1d1f; box-shadow: 0 2px 4px #0005; }
 .door-name b { display: block; font: 600 15px/1.15 var(--sign); letter-spacing: .04em; text-transform: uppercase; }
 .door-name small { display: block; font: 500 10px/1.3 var(--mono); color: #555; margin-top: 3px; }
-.door-handle { position: absolute; right: 9%; top: 58%; width: 34px; height: 10px; border-radius: 5px;
+.door-handle { position: absolute; right: 9%; top: 76%; width: 34px; height: 10px; border-radius: 5px;
   background: linear-gradient(180deg, #fff, #a2a8b0 60%, #5c6168); box-shadow: 0 3px 4px #0007; transform-origin: 85% 50%; transition: transform .25s; }
 .door-handle::after { content: ""; position: absolute; right: 2px; top: -5px; width: 12px; height: 20px; border-radius: 4px; background: linear-gradient(90deg, #8d939b, #d6dade); z-index: -1; }
 .room:hover .door-handle { transform: rotate(-24deg); }
@@ -515,7 +517,7 @@ button { font: inherit; color: inherit; }
 .plaque li b { display: block; font: 600 19px var(--sign); text-transform: uppercase; letter-spacing: .04em; color: #15171a; text-shadow: 0 1px 0 #fff8; }
 .plaque li span { font-size: 15px; color: #3a3e45; }
 .plaque .cap { margin-top: 26px; padding-top: 16px; border-top: 2px solid #0002; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font: 500 12px var(--mono); color: #3a3e45; }
-.stamp-ok { position: absolute; right: 6%; top: 18%; width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; text-align: center;
+.stamp-ok { position: absolute; right: 28px; top: 22px; width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; text-align: center;
   border: 4px double var(--accent-2); color: var(--accent-2); font: 700 13px/1.2 var(--sign); letter-spacing: .12em; transform: rotate(-16deg); opacity: .8; mix-blend-mode: multiply; }
 :root[data-theme="dark"] .stamp-ok { mix-blend-mode: normal; color: #0f8a6c; border-color: #0f8a6c; }
 
@@ -763,6 +765,11 @@ body.modal-open .cursor-ring { opacity: .5; }
   .doors { grid-template-columns: minmax(0, 260px); }
   .badge { width: 262px; height: 410px; }
   .letter-to { padding-right: 0; padding-top: 90px; }
+  .floor-sign { max-width: calc(100% - 56px); }
+  .floor-sign .fs-num { padding: 8px 14px; }
+  .floor-sign .fs-text { padding: 8px 14px 8px 12px; }
+  .floor-sign b { font-size: 22px; }
+  .floor-sign small { font-size: 10px; letter-spacing: .08em; white-space: nowrap; }
   .postmark { right: 100px; }
   .plaque li { grid-template-columns: 44px 1fr; }
   .stamp-ok { display: none; }
