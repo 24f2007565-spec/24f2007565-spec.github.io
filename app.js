@@ -102,7 +102,10 @@
       <p class="board-title">pinned at reception →</p>
       <div class="paper"><span class="pin"></span>
         <p class="lead">${esc(A.lead)}</p>
-        ${D.intro.concat(A.body).map((p) => `<p>${esc(p)}</p>`).join("")}
+        ${D.intro.map((p) => `<p>${esc(p)}</p>`).join("")}
+      </div>
+      <div class="paper p2"><span class="pin green"></span>
+        ${A.body.map((p) => `<p>${esc(p)}</p>`).join("")}
       </div>
       <div class="stickies">
         <div class="sticky" style="--c:#fffdf7;--r:-2deg"><span class="pin blue"></span>Areas I've explored ↓</div>
@@ -162,8 +165,11 @@
           </div>`).join("")}
       </div>
       <div class="casters"><span></span><span></span></div>`;
+    // one drawer open at a time, so the chest always fits on screen
     $$(".drawer-front").forEach((b) => b.addEventListener("click", () => {
-      const d = b.parentElement, open = d.classList.toggle("open");
+      const d = b.parentElement, open = !d.classList.contains("open");
+      $$(".drawer").forEach((o) => { o.classList.remove("open"); $(".drawer-front", o).setAttribute("aria-expanded", "false"); });
+      d.classList.toggle("open", open);
       b.setAttribute("aria-expanded", String(open));
     }));
   }

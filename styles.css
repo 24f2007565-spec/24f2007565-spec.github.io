@@ -196,7 +196,16 @@ button { font: inherit; color: inherit; }
   main .roof { padding-right: 0; padding-left: 0; }
   .roof-inner { width: min(1080px, 100% - 292px); }
 }
-.floor { position: relative; padding: 120px 0 110px; border-top: 10px solid var(--bg-alt); }
+.floor { position: relative; padding: 96px 0 72px; border-top: 10px solid var(--bg-alt); min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+.floor > .container { width: 100%; }
+.floor-sign { margin-bottom: 26px !important; }
+.floor-hint { margin: -6px 0 18px !important; }
+@media (max-height: 820px) and (min-width: 900px) {
+  .floor { padding: 84px 0 56px; }
+  .floor-sign { margin-bottom: 18px !important; }
+  .floor-sign .fs-num { font-size: 34px; }
+  .floor-sign b { font-size: 24px; }
+}
 .floor::before { /* ceiling lamp pool of light */
   content: ""; position: absolute; left: 50%; top: 0; width: min(900px, 100%); height: 520px; translate: -50% 0; pointer-events: none;
   background: radial-gradient(ellipse at 50% 0, rgba(255, 190, 90, calc(.04 + var(--glow) * .1)), transparent 70%);
@@ -289,10 +298,33 @@ button { font: inherit; color: inherit; }
     radial-gradient(circle at 70% 60%, #fff2 1px, transparent 2px) 0 0 / 13px 13px,
     var(--cork);
   box-shadow: var(--shadow-lg), inset 0 0 40px #0003;
-  display: grid; grid-template-columns: 1.15fr 1fr; gap: 34px; align-items: start;
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start;
 }
+.corkboard .stickies { align-content: start; }
+.sticky { min-height: 84px !important; }
+.letter-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.postmark { display: none !important; } /* it collided with the return-address field */
+.letter-to { padding-right: 110px !important; }
+@media (max-height: 820px) and (min-width: 900px) { .room-sum { display: none; } .doorway { height: clamp(170px, calc(100svh - 360px), 380px); } }
+.letter textarea { min-height: 0 !important; }
+.letter { padding: 24px 26px 20px !important; }
+.letter-to { margin-bottom: 14px !important; min-height: 0 !important; }
+.plaque { padding: clamp(18px, 3vh, 36px) clamp(20px, 4vw, 44px) !important; }
+.plaque ol { gap: clamp(8px, 1.6vh, 16px) !important; }
+.plaque .cap { margin-top: 16px !important; padding-top: 12px !important; }
+.drawer-front { padding: 10px 16px !important; }
+.tray .foam { padding: 10px !important; }
+@media (max-height: 820px) and (min-width: 900px) {
+  .corkboard { padding: 22px; }
+  .sticky { font-size: 18px !important; min-height: 66px !important; padding: 14px 12px 10px !important; }
+  .paper { font-size: 14px; line-height: 22px; }
+  .paper .lead { font-size: 17px; line-height: 22px; }
+  .plaque li span { font-size: 14px; }
+  .modal-body h4 { margin: 12px 0 6px; }
+}
+.paper.p2 { transform: rotate(1deg); margin-top: 28px; }
 .paper {
-  position: relative; background: #fffdf7; color: #222; padding: 34px 30px 26px; transform: rotate(-1.2deg);
+  position: relative; background: #fffdf7; color: #222; padding: 26px 26px 20px; transform: rotate(-1.2deg);
   box-shadow: 0 14px 24px -12px #0007; background-image: repeating-linear-gradient(180deg, transparent 0 27px, #a9c4e855 27px 28px);
   line-height: 28px; font-size: 16px;
 }
@@ -413,7 +445,11 @@ button { font: inherit; color: inherit; }
 .breaker-sw[aria-pressed="true"] .tag { background: #ffb547; }
 .breaker-sw .tag i { font-style: normal; opacity: .6; }
 
-.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 46px 44px; align-items: start; }
+.doors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 28px; align-items: start; }
+/* short screens: lab doors shrink so the whole floor fits */
+.doorway { aspect-ratio: auto; height: clamp(190px, calc(100svh - 430px), 430px); }
+.doors .vision { aspect-ratio: auto; height: 150px; }
+@media (max-height: 820px) { .room-plate { font-size: 13px; } .doormat { display: none; } }
 .room { position: relative; display: grid; gap: 10px; outline: none; }
 .room-plate { justify-self: center; display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px; border-radius: 4px;
   font: 700 15px var(--sign); letter-spacing: .14em; background: var(--text); color: var(--bg); box-shadow: var(--shadow); }
