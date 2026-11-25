@@ -197,7 +197,7 @@ button { font: inherit; color: inherit; }
   .roof-inner { width: min(1080px, 100% - 292px); }
 }
 .floor { position: relative; padding: 96px 0 72px; border-top: 10px solid var(--bg-alt); min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
-.floor > .container { width: min(1080px, 100% - 32px); }
+.floor > .container, #lobby > .container { width: min(1080px, 100% - 32px); margin-inline: auto; }
 .floor-sign { margin-bottom: 26px !important; }
 .floor-hint { margin: -6px 0 18px !important; }
 @media (max-height: 820px) and (min-width: 900px) {
