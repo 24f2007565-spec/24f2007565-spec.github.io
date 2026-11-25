@@ -197,7 +197,7 @@ button { font: inherit; color: inherit; }
   .roof-inner { width: min(1080px, 100% - 292px); }
 }
 .floor { position: relative; padding: 96px 0 72px; border-top: 10px solid var(--bg-alt); min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
-.floor > .container { width: 100%; }
+.floor > .container { width: min(1080px, 100% - 32px); }
 .floor-sign { margin-bottom: 26px !important; }
 .floor-hint { margin: -6px 0 18px !important; }
 @media (max-height: 820px) and (min-width: 900px) {
@@ -782,6 +782,16 @@ body.modal-open .cursor-ring { opacity: .5; }
   .clipboard { margin: 22px 14px 0; }
 }
 @media (max-width: 899px) {
+  /* a solid band behind the nameplate and light switch so content never runs under them */
+  .topbar::before { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 74px; z-index: -1;
+    background: linear-gradient(to bottom, var(--bg) 70%, transparent); pointer-events: none; }
+  .topbar { z-index: 110; }
+  .light-switch .plate { width: 34px; height: 52px; }
+  .rocker { width: 14px; height: 28px; }
+  .ls-label { display: none; }
+  .drawer-front { flex-wrap: wrap; }
+  .drawer-front .label-card { flex: 1 1 auto; min-width: 0; font-size: 13px; }
+  .drawer-front .handle { display: none; }
   .elevator { top: auto; bottom: 16px; translate: none; width: auto; padding: 8px; gap: 6px; }
   .el-display { cursor: pointer; padding: 6px 12px; }
   .el-label { display: none; }
