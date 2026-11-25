@@ -788,7 +788,15 @@ body.modal-open .cursor-ring { opacity: .5; }
   .topbar { z-index: 110; }
   .light-switch .plate { width: 34px; height: 52px; }
   .rocker { width: 14px; height: 28px; }
-  .ls-label { display: none; }
+  .ls-label { display: none !important; }
+  .breaker { padding: 10px 12px; gap: 10px; width: 100%; }
+  .breaker-switches { width: 100%; justify-content: space-between; gap: 6px; flex-wrap: nowrap; }
+  .breaker-sw { min-width: 0; flex: 1 1 0; }
+  .breaker-sw .slot { width: 20px; height: 32px; margin: 0 auto; }
+  .breaker-sw .lever { height: 14px; }
+  .breaker-sw[aria-pressed="true"] .lever { transform: translateY(-14px); }
+  .breaker-sw .tag { font-size: 9px; padding: 1px 3px; white-space: nowrap; }
+  .breaker-title { display: none; }
   .drawer-front { flex-wrap: wrap; }
   .drawer-front .label-card { flex: 1 1 auto; min-width: 0; font-size: 13px; }
   .drawer-front .handle { display: none; }
