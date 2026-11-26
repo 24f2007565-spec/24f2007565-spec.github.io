@@ -142,7 +142,17 @@ body.outside .lb-line .ch.in { animation-play-state: paused; }
     max-width: calc(375 * var(--u)); gap: calc(56.7 * var(--u) - var(--cap) * var(--display-size)); }
   .ent-h1 .ln { white-space: normal; }
   .ent-badge { padding-right: 64px; } /* clear the light switch */
-  .ent-lead { left: calc(20 * var(--u)); right: calc(20 * var(--u)); width: auto; max-width: calc(369 * var(--u)); bottom: calc(116 * var(--u)); }
+  /* the tagline gets its own dark panel above the buttons, so it never sits on the glowing door */
+  .ent-lead {
+    left: calc(20 * var(--u)); right: calc(20 * var(--u)); width: auto; max-width: calc(375 * var(--u));
+    bottom: calc(104 * var(--u)); padding: 14px 16px; border-radius: 16px;
+    background: rgba(14, 11, 16, .62); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    text-shadow: none; box-shadow: 0 12px 30px -12px rgba(0,0,0,.6);
+  }
+  /* headline and badge get a stronger shadow so they read over the windows */
+  .ent-h1 { text-shadow: 0 2px 4px rgba(0,0,0,.45), 0 0 24px rgba(0,0,0,.55); }
+  .ent-badge { text-shadow: 0 1px 6px rgba(0,0,0,.8); }
+  .ent-btns { gap: calc(10 * var(--u)); }
   .ent-btns { right: calc(20 * var(--u)); }
   .ent-btn { flex: 1; }
   .ent-scene::after { background: linear-gradient(to bottom, rgba(10,8,12,.55), transparent 35%), linear-gradient(to top, rgba(10,8,12,.65), transparent 40%); }
